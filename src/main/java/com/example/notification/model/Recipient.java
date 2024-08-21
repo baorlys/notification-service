@@ -14,7 +14,7 @@ import java.util.UUID;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @NoArgsConstructor
 @AllArgsConstructor
-public class Receiver {
+public class Recipient {
     @Id
     @GeneratedValue
     UUID id;
