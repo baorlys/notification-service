@@ -1,6 +1,7 @@
 package com.example.notification.model;
 
 import com.example.notification.enums.TargetOutput;
+import com.example.notification.enums.TemplateType;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -22,6 +23,8 @@ public class Template {
 
     @Column(nullable = false)
     String name;
+
+    TemplateType templateType;
 
     @Column(nullable = false)
     TargetOutput targetOutput;
