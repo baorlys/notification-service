@@ -21,9 +21,14 @@ public class Template {
     @GeneratedValue
     UUID id;
 
+    @ManyToOne
+    @JoinColumn(nullable = false)
+    User owner;
+
     @Column(nullable = false)
     String name;
 
+    @Enumerated(EnumType.STRING)
     TemplateType templateType;
 
     @Column(nullable = false)
