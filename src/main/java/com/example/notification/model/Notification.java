@@ -1,5 +1,6 @@
 package com.example.notification.model;
 
+import com.example.notification.enums.NotificationStatus;
 import com.example.notification.enums.TargetOutput;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
@@ -31,7 +32,11 @@ public class Notification {
     @ManyToOne
     Template template;
 
+    @Enumerated(EnumType.STRING)
     TargetOutput targetOutput;
+
+    @Enumerated(EnumType.STRING)
+    NotificationStatus status = NotificationStatus.PENDING;
 
     @Column(updatable = false, insertable = false)
     LocalDateTime createdAt = LocalDateTime.now();
