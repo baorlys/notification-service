@@ -26,6 +26,7 @@ public class Log {
 
     String queue;
 
+    @Enumerated(EnumType.STRING)
     QueueStatus status;
 
     @Column(updatable = false, insertable = false)

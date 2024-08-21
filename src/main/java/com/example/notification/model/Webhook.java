@@ -26,6 +26,7 @@ public class Webhook {
 
     String url;
 
+    @Enumerated(EnumType.STRING)
     WebhookEvent event;
 
     @Column(updatable = false, insertable = false)
