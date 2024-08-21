@@ -27,11 +27,5 @@ public class Template {
     TemplateType templateType;
 
     @Column(nullable = false)
-    TargetOutput targetOutput;
-
-    @Column(nullable = false)
     String body;
-
-
-
 }
