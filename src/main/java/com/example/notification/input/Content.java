@@ -6,5 +6,5 @@ import lombok.Data;
 @Data
 public class Content {
     TemplateType type;
-    String value;
+    Object value;
 }

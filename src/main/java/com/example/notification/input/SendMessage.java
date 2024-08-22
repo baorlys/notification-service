@@ -8,9 +8,10 @@ import java.util.List;
 @Data
 public class SendMessage {
     TargetOutput targetOutput;
-    String from;
-    List<String> to;
+    EmailAddress emailAddress;
+    List<String> tos;
     String subject;
-    Content content;
+    String templateId;
+    List<Content> contents;
 
 }

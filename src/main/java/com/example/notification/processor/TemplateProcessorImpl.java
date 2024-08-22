@@ -7,7 +7,6 @@ import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 import java.io.StringWriter;
-import java.util.Map;
 
 @Component
 public class TemplateProcessorImpl implements TemplateProcessor {
@@ -18,7 +17,7 @@ public class TemplateProcessorImpl implements TemplateProcessor {
         configuration.setDefaultEncoding("UTF-8");
     }
 
-    public String processTemplate(Map<String, Object> data, String template) throws TemplateException, IOException {
+    public String processTemplate(Object data, String template) throws TemplateException, IOException {
         Template temp = new Template("", template, configuration);
         StringWriter writer = new StringWriter();
         temp.process(data, writer);
