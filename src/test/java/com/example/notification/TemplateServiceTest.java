@@ -42,19 +42,12 @@ class TemplateServiceTest {
         String name = "Khoa";
         int age = 21;
         String job = "Software Engineering";
-        String htmlTemplate = "<html>" +
-                "<body>" +
-                "<h1>Profile Information</h1>" +
-                "<p><strong>Name:</strong> ${name}</p>" +
-                "<p><strong>Age:</strong> ${age}</p>" +
-                "<p><strong>Job:</strong> ${job}</p>" +
-                "</body>" +
-                "</html>";
+        Template temp = templateService.getTemplateById(UUID.fromString("47670D2D-E48E-4AC9-BDB7-10A6AF399486"));
         Map<String, Object> model = new HashMap<>();
         model.put("name", name);
         model.put("age", age);
         model.put("job", job);
-        String result = templateService.processTemplate(model, htmlTemplate);
+        String result = templateService.processTemplate(model, temp.getBody());
         assertNotEquals("", result);
     }
 
@@ -76,7 +69,7 @@ class TemplateServiceTest {
     }
 
     @Test
-    void testUpdateTemplate(){
+    void testUpdateTemplate() {
         UUID id = UUID.fromString("47670D2D-E48E-4AC9-BDB7-10A6AF399486");
         TemplateInput input = new TemplateInput();
         input.setName("new name");

@@ -1,6 +1,7 @@
 package com.example.notification.service.impl;
 
 import com.example.notification.enums.TemplateType;
+import com.example.notification.global.service.CommonService;
 import com.example.notification.input.TemplateInput;
 import com.example.notification.model.Template;
 import com.example.notification.model.User;
@@ -11,7 +12,6 @@ import com.example.notification.service.TemplateService;
 import freemarker.template.TemplateException;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -62,7 +62,7 @@ public class TemplateServiceImpl implements TemplateService {
     @Override
     public Template updateTemplate(UUID id, TemplateInput input) {
         Template t = getTemplateById(id);
-        // check non null
+        CommonService.throwIsNull(t, "Not found template");
         t.setName(input.getName());
         t.setBody(input.getContent());
         return templateRepository.save(t);
