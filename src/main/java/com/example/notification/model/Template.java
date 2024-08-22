@@ -33,6 +33,6 @@ public class Template {
     TemplateType templateType;
 
     @Column(nullable = false)
-    @Nationalized
+    @Lob
     String body;
 }
