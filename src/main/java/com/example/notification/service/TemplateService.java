@@ -1,6 +1,5 @@
 package com.example.notification.service;
 
-import com.example.notification.enums.TemplateType;
 import com.example.notification.input.TemplateInput;
 import com.example.notification.model.Template;
 import org.springframework.stereotype.Service;
@@ -11,7 +10,7 @@ import java.util.UUID;
 
 @Service
 public interface TemplateService {
-    Template createTemplate(UUID userId, String name, TemplateType type, String content);
+    Template createTemplate(UUID userId, TemplateInput input);
 
     String processTemplate(Map<String, Object> data, String template);
 

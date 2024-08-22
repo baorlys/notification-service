@@ -33,7 +33,7 @@ public class TemplateController {
     public ResponseEntity<TemplateDTO> getTemplateById(
             @RequestParam UUID userId,
             @RequestBody TemplateInput input) {
-        Template t = templateService.createTemplate(userId, input.getName(), input.getType(), input.getContent());
+        Template t = templateService.createTemplate(userId, input);
         return new ResponseEntity<>(mapper.map(t, TemplateDTO.class), HttpStatus.OK);
     }
 
