@@ -1,11 +1,13 @@
 package com.example.notification.global.factory;
 
 import com.example.notification.input.TemplateInput;
+import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 
+@Component
 public class ContentFactory {
     public String extractContent(TemplateInput input) throws IOException {
         switch (input.getType()) {
