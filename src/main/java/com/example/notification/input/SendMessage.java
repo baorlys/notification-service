@@ -8,7 +8,7 @@ import java.util.List;
 @Data
 public class SendMessage {
     TargetOutput targetOutput;
-    EmailAddress emailAddress;
+    EmailAddress from;
     List<String> tos;
     String subject;
     String templateId;

@@ -2,7 +2,7 @@ package com.example.notification.controller;
 
 import com.example.notification.input.SendMessage;
 import com.example.notification.service.NotificationService;
-import com.fasterxml.jackson.core.JsonProcessingException;
+import freemarker.template.TemplateException;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.io.IOException;
+
 @RestController
 @RequestMapping("api/notification")
 @AllArgsConstructor
@@ -20,7 +22,7 @@ public class NotificationController {
     NotificationService notificationService;
 
     @PostMapping("/send")
-    public ResponseEntity<Void> sendNotification(@RequestBody SendMessage request) throws JsonProcessingException {
+    public ResponseEntity<Void> sendNotification(@RequestBody SendMessage request) throws IOException, TemplateException {
         notificationService.processNotification(request);
         return ResponseEntity.ok().build();
     }
