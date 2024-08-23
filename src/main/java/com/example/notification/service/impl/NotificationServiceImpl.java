@@ -42,7 +42,7 @@ public class NotificationServiceImpl implements NotificationService {
 
     @Override
     public void processNotification(SendMessage msg) throws IOException, TemplateException {
-        User user = fetchUser(msg.getEmailAddress().getEmail());
+        User user = fetchUser(msg.getFrom().getEmail());
         Notification notify = createNotification(msg, user);
         saveRecipients(notify, msg.getTos(), msg.getContents());
         sendNotifications(notify, msg);
@@ -58,7 +58,7 @@ public class NotificationServiceImpl implements NotificationService {
         Notification notify = new Notification();
         notify.setUser(user);
         notify.setTemplate(template);
-        notify.setSender(msg.getEmailAddress().getEmail());
+        notify.setSender(msg.getFrom().getEmail());
         notify.setTargetOutput(msg.getTargetOutput());
         return notificationRepository.save(notify);
     }
@@ -132,7 +132,7 @@ public class NotificationServiceImpl implements NotificationService {
 
     private Map<String, Object> createNotificationMessage(SendMessage msg, String to, String body) {
         Map<String, Object> notify = new HashMap<>();
-        notify.put("from", msg.getEmailAddress());
+        notify.put("from", msg.getFrom());
         notify.put("to", to);
         notify.put("subject", msg.getSubject());
         notify.put("body", body);
