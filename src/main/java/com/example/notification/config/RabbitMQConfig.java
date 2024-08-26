@@ -10,33 +10,32 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class RabbitMQConfig {
-
     @Bean
-    public DirectExchange notificationExchange(@Value("${spring.rabbitmq.direct.exchange}") String directExchange) {
+    public DirectExchange notificationExchange(@Value("${spring.rabbitmq.direct-exchange}") String directExchange) {
         return new DirectExchange(directExchange);
     }
 
     @Bean
-    public Queue smsQueue(@Value("${spring.rabbitmq.sms.queue}") String smsQueueName) {
+    public Queue smsQueue(@Value("${spring.rabbitmq.queue.sms}") String smsQueueName) {
         return new Queue(smsQueueName, true);
     }
 
     @Bean
-    public Queue emailQueue(@Value("${spring.rabbitmq.email.queue}") String emailQueueName) {
+    public Queue emailQueue(@Value("${spring.rabbitmq.queue.email}") String emailQueueName) {
         return new Queue(emailQueueName, true);
     }
 
     @Bean
     public Binding smsBinding(DirectExchange notificationExchange,
-                              @Value("${spring.rabbitmq.sms.queue}") String smsQueueName,
-                              @Value("${spring.rabbitmq.sms.routing-key}") String smsRoutingKey) {
+                              @Value("${spring.rabbitmq.queue.sms}") String smsQueueName,
+                              @Value("${spring.rabbitmq.routing-key.sms}") String smsRoutingKey) {
         return BindingBuilder.bind(new Queue(smsQueueName, true)).to(notificationExchange).with(smsRoutingKey);
     }
 
     @Bean
     public Binding emailBinding(DirectExchange notificationExchange,
-                                @Value("${spring.rabbitmq.email.queue}") String emailQueueName,
-                                @Value("${spring.rabbitmq.email.routing-key}") String emailRoutingKey) {
+                                @Value("${spring.rabbitmq.queue.email}") String emailQueueName,
+                                @Value("${spring.rabbitmq.routing-key.email}") String emailRoutingKey) {
         return BindingBuilder.bind(new Queue(emailQueueName, true)).to(notificationExchange).with(emailRoutingKey);
     }
 }

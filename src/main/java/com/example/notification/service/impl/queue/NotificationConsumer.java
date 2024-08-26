@@ -25,9 +25,11 @@ public class NotificationConsumer {
 
     ObjectMapper objectMapper = new ObjectMapper();
 
+    static final String EMAIL_QUEUE = "email-queue";
+    static final String SMS_QUEUE = "sms-queue";
 
 
-    @RabbitListener(queues = "sms-queue")
+    @RabbitListener(queues = SMS_QUEUE)
     public void receiveSmsNotification(String message) throws JsonProcessingException {
         Map<String,Object> msg = objectMapper.readValue(message, new TypeReference<>() {});
         sendSMSProcessor.process(
@@ -37,7 +39,7 @@ public class NotificationConsumer {
         );
     }
 
-    @RabbitListener(queues = "email-queue")
+    @RabbitListener(queues = EMAIL_QUEUE)
     public void receiveEmailNotification(String message) throws IOException {
         Map<String,Object> msg = objectMapper.readValue(message, new TypeReference<>() {});
         sendMailProcessor.process(
