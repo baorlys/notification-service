@@ -14,9 +14,6 @@ import org.springframework.stereotype.Component;
 public class SendMailProcessorImpl implements SendMailProcessor {
     EnvironmentConfig environmentConfig;
 
-    TemplateProcessor templateProcessor;
-
-
     @Override
     public void process(EmailAddress from, String to, String subject, String body) {
         Email email = EmailBuilder.startingBlank()
