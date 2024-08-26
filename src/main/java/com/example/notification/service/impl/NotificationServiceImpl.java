@@ -31,7 +31,6 @@ import java.util.*;
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 @Slf4j
 public class NotificationServiceImpl implements NotificationService {
-
     AmqpTemplate amqpTemplate;
     TemplateProcessor templateProcessor;
     NotificationRepository notificationRepository;
@@ -126,11 +125,11 @@ public class NotificationServiceImpl implements NotificationService {
     }
 
     private void sendNotification(SendMessage msg, String to, String body) throws JsonProcessingException {
-        Map<String, Object> notify = createNotificationMessage(msg, to, body);
+        Map<String, Object> notify = createPublicMessage(msg, to, body);
         publishNotification(msg.getTargetOutput(), notify);
     }
 
-    private Map<String, Object> createNotificationMessage(SendMessage msg, String to, String body) {
+    private Map<String, Object> createPublicMessage(SendMessage msg, String to, String body) {
         Map<String, Object> notify = new HashMap<>();
         notify.put("from", msg.getFrom());
         notify.put("to", to);
