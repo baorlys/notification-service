@@ -2,7 +2,8 @@ package com.example.notification.service.impl.queue;
 
 import com.example.notification.input.EmailAddress;
 import com.example.notification.processor.SendMailProcessor;
-import com.example.notification.processor.SendSMSProcessor;
+import com.example.notification.processor.SendSmsProcessor;
+import com.example.notification.processor.VoiceCallProcessor;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -21,12 +22,15 @@ import java.util.Map;
 public class NotificationConsumer {
     SendMailProcessor sendMailProcessor;
 
-    SendSMSProcessor sendSMSProcessor;
+    SendSmsProcessor sendSMSProcessor;
+
+    VoiceCallProcessor voiceCallProcessor;
 
     ObjectMapper objectMapper = new ObjectMapper();
 
     static final String EMAIL_QUEUE = "email-queue";
     static final String SMS_QUEUE = "sms-queue";
+    static final String VOICE_QUEUE = "voice-queue";
 
 
     @RabbitListener(queues = SMS_QUEUE)
@@ -46,6 +50,15 @@ public class NotificationConsumer {
                 objectMapper.convertValue(msg.get("from"), EmailAddress.class),
                 (String) msg.get("to"),
                 (String) msg.get("subject"),
+                (String) msg.get("body")
+        );
+    }
+
+    @RabbitListener(queues = VOICE_QUEUE)
+    public void receiveVoiceNotification(String message) throws IOException {
+        Map<String,Object> msg = objectMapper.readValue(message, new TypeReference<>() {});
+        voiceCallProcessor.process(
+                (String) msg.get("to"),
                 (String) msg.get("body")
         );
     }
