@@ -37,4 +37,5 @@ public class SendMailProcessorImpl implements SendMailProcessor {
         mailer.sendMail(email);
     }
 
+
 }
