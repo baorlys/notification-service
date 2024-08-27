@@ -1,6 +1,7 @@
 package com.example.notification.processor;
 
 import com.example.notification.config.EnvironmentConfig;
+import com.example.notification.config.MessageConstants;
 import com.example.notification.input.SenderInfo;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -20,10 +21,10 @@ public abstract class ProcessorNotificationTemplate {
     }
     public void process() throws IOException {
         Map<String, Object> messageMap = convertMessageToMap();
-        SenderInfo from = objectMapper.convertValue(messageMap.get("from"), SenderInfo.class);
-        String to = (String) messageMap.get("to");
-        String subject = (String) messageMap.get("subject");
-        String body = (String) messageMap.get("body");
+        SenderInfo from = objectMapper.convertValue(messageMap.get(MessageConstants.FROM), SenderInfo.class);
+        String to = (String) messageMap.get(MessageConstants.TO);
+        String subject = (String) messageMap.get(MessageConstants.SUBJECT);
+        String body = (String) messageMap.get(MessageConstants.BODY);
         processStrategy(from,to,subject,body);
     }
 

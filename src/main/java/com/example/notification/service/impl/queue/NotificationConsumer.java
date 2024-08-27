@@ -1,5 +1,6 @@
 package com.example.notification.service.impl.queue;
 
+import com.example.notification.config.QueueConstants;
 import com.example.notification.config.StringeeAPIConfig;
 import com.example.notification.processor.ProcessorNotificationTemplate;
 import com.example.notification.processor.SendMailStrategy;
@@ -19,24 +20,20 @@ import java.io.IOException;
 public class NotificationConsumer {
     StringeeAPIConfig stringeeAPIConfig;
 
-    static final String EMAIL_QUEUE = "email-queue";
-    static final String SMS_QUEUE = "sms-queue";
-    static final String VOICE_QUEUE = "voice-queue";
 
-
-    @RabbitListener(queues = SMS_QUEUE)
+    @RabbitListener(queues = QueueConstants.SMS_QUEUE)
     public void receiveSmsNotification(String message) throws IOException {
         ProcessorNotificationTemplate processor = new SendSmsStrategy(message);
         processor.process();
     }
 
-    @RabbitListener(queues = EMAIL_QUEUE)
+    @RabbitListener(queues = QueueConstants.EMAIL_QUEUE)
     public void receiveEmailNotification(String message) throws IOException {
         ProcessorNotificationTemplate processor = new SendMailStrategy(message);
         processor.process();
     }
 
-    @RabbitListener(queues = VOICE_QUEUE)
+    @RabbitListener(queues = QueueConstants.VOICE_QUEUE)
     public void receiveVoiceNotification(String message) throws IOException {
         ProcessorNotificationTemplate processor = new VoiceCallStrategy(
                 message,
