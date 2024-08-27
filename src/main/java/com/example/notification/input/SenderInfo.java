@@ -3,7 +3,7 @@ package com.example.notification.input;
 import lombok.Data;
 
 @Data
-public class EmailAddress {
-    String email;
+public class SenderInfo {
+    String contact; // Maybe Email or PhoneNumber
     String name;
 }
