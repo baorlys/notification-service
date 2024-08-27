@@ -41,7 +41,7 @@ public class NotificationServiceImpl implements NotificationService {
 
     @Override
     public void processNotification(SendMessage msg) throws IOException, TemplateException {
-        User user = fetchUser(msg.getFrom().getEmail());
+        User user = fetchUser(msg.getFrom().getContact());
         Notification notification = createNotification(msg, user);
         saveRecipients(notification, msg.getTos(), msg.getContents());
         sendNotifications(notification, msg);
@@ -59,7 +59,7 @@ public class NotificationServiceImpl implements NotificationService {
         Notification notify = new Notification();
         notify.setUser(user);
         notify.setTemplate(template);
-        notify.setSender(msg.getFrom().getEmail());
+        notify.setSender(msg.getFrom().getContact());
         notify.setTargetOutput(msg.getTargetOutput());
         return notificationRepository.save(notify);
     }

@@ -1,23 +1,21 @@
 package com.example.notification.processor;
 
-import com.example.notification.config.EnvironmentConfig;
-import com.example.notification.input.EmailAddress;
-import lombok.AllArgsConstructor;
+import com.example.notification.input.SenderInfo;
 import org.simplejavamail.api.email.Email;
 import org.simplejavamail.api.mailer.Mailer;
 import org.simplejavamail.email.EmailBuilder;
 import org.simplejavamail.mailer.MailerBuilder;
-import org.springframework.stereotype.Component;
 
-@Component
-@AllArgsConstructor
-public class SendMailProcessorImpl implements SendMailProcessor {
-    EnvironmentConfig environmentConfig;
+public class SendMailStrategy extends ProcessorNotificationTemplate {
+
+    public SendMailStrategy(String message) {
+        super(message);
+    }
 
     @Override
-    public void process(EmailAddress from, String to, String subject, String body) {
+    void processStrategy(SenderInfo from, String to, String subject, String body) {
         Email email = EmailBuilder.startingBlank()
-                .from(from.getName(), from.getEmail())
+                .from(from.getName(), from.getContact())
                 .to(to)
                 .withSubject(subject)
                 .withHTMLText(body)
@@ -36,6 +34,7 @@ public class SendMailProcessorImpl implements SendMailProcessor {
 
         mailer.sendMail(email);
     }
+
 
 
 }
