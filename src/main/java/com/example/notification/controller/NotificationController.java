@@ -26,4 +26,5 @@ public class NotificationController {
         notificationService.processNotification(request);
         return ResponseEntity.ok().build();
     }
+
 }

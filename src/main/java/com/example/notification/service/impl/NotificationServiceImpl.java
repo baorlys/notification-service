@@ -42,17 +42,19 @@ public class NotificationServiceImpl implements NotificationService {
     @Override
     public void processNotification(SendMessage msg) throws IOException, TemplateException {
         User user = fetchUser(msg.getFrom().getEmail());
-        Notification notify = createNotification(msg, user);
-        saveRecipients(notify, msg.getTos(), msg.getContents());
-        sendNotifications(notify, msg);
+        Notification notification = createNotification(msg, user);
+        saveRecipients(notification, msg.getTos(), msg.getContents());
+        sendNotifications(notification, msg);
     }
+
 
     private User fetchUser(String email) {
         return Optional.ofNullable(userRepository.findByEmail(email))
                 .orElseThrow(() -> new IllegalArgumentException("User not found"));
     }
 
-    private Notification createNotification(SendMessage msg, User user) {
+    private Notification createNotification(SendMessage msg,
+                                            User user) {
         Template template = fetchTemplate(msg.getTemplateId());
         Notification notify = new Notification();
         notify.setUser(user);
@@ -69,13 +71,17 @@ public class NotificationServiceImpl implements NotificationService {
                 .orElse(null);
     }
 
-    private void saveRecipients(Notification notification, List<String> tos, List<Content> bodies)
+    private void saveRecipients(Notification notification,
+                                List<String> tos,
+                                List<Content> bodies)
             throws JsonProcessingException {
         List<Recipient> recs = createRecipients(notification, tos, bodies);
         recipientRepository.saveAll(recs);
     }
 
-    private List<Recipient> createRecipients(Notification notification, List<String> tos, List<Content> bodies)
+    private List<Recipient> createRecipients(Notification notification,
+                                             List<String> tos,
+                                             List<Content> bodies)
             throws JsonProcessingException {
         int size = Math.min(tos.size(), bodies.size());
         List<Recipient> recipients = new ArrayList<>();
@@ -85,7 +91,9 @@ public class NotificationServiceImpl implements NotificationService {
         return recipients;
     }
 
-    private Recipient createRecipient(Notification notification, String contact, Content content)
+    private Recipient createRecipient(Notification notification,
+                                      String contact,
+                                      Content content)
             throws JsonProcessingException {
         Recipient rec = new Recipient();
         rec.setNotification(notification);
@@ -95,14 +103,17 @@ public class NotificationServiceImpl implements NotificationService {
 
     }
 
-    private void sendNotifications(Notification notification, SendMessage msg) throws IOException, TemplateException {
+    private void sendNotifications(Notification notification,
+                                   SendMessage msg) throws IOException, TemplateException {
         List<Map.Entry<String, String>> notifications = prepareNotifications(notification, msg.getTos(), msg.getContents());
         for (Map.Entry<String, String> entry : notifications) {
             sendNotification(msg, entry.getKey(), entry.getValue());
         }
     }
 
-    private List<Map.Entry<String, String>> prepareNotifications(Notification notification, List<String> tos, List<Content> bodies)
+    private List<Map.Entry<String, String>> prepareNotifications(Notification notification,
+                                                                 List<String> tos,
+                                                                 List<Content> bodies)
             throws TemplateException, IOException {
         Template template = notification.getTemplate();
         List<Map.Entry<String, String>> notifies = new ArrayList<>();
@@ -110,26 +121,31 @@ public class NotificationServiceImpl implements NotificationService {
         for (int i = 0; i < tos.size(); i++) {
             String to = tos.get(i);
             Content body = bodies.get(i);
-            String notifyBody = createNotificationBody(template, body);
-            notifies.add(new AbstractMap.SimpleEntry<>(to, notifyBody));
+            String genBody = createNotificationBody(template, body);
+            notifies.add(new AbstractMap.SimpleEntry<>(to, genBody));
         }
 
         return notifies;
     }
 
-    private String createNotificationBody(Template template, Content content) throws TemplateException, IOException {
+    private String createNotificationBody(Template template,
+                                          Content content) throws TemplateException, IOException {
         if (template == null) {
             return String.valueOf(content.getValue());
         }
         return generateBody(template.getBody(), content);
     }
 
-    private void sendNotification(SendMessage msg, String to, String body) throws JsonProcessingException {
+    private void sendNotification(SendMessage msg,
+                                  String to,
+                                  String body) throws JsonProcessingException {
         Map<String, Object> notify = createPublicMessage(msg, to, body);
         publishNotification(msg.getTargetOutput(), notify);
     }
 
-    private Map<String, Object> createPublicMessage(SendMessage msg, String to, String body) {
+    private Map<String, Object> createPublicMessage(SendMessage msg,
+                                                    String to,
+                                                    String body) {
         Map<String, Object> notify = new HashMap<>();
         notify.put("from", msg.getFrom());
         notify.put("to", to);
@@ -138,13 +154,16 @@ public class NotificationServiceImpl implements NotificationService {
         return notify;
     }
 
-    private void publishNotification(TargetOutput targetOutput, Object msg) throws JsonProcessingException {
+    private void publishNotification(TargetOutput targetOutput,
+                                     Object msg) throws JsonProcessingException {
         String queueName = Optional.ofNullable(targetOutput.getQueueName())
                 .orElseThrow(() -> new IllegalArgumentException("Queue name is null"));
         amqpTemplate.convertAndSend(queueName, objectMapper.writeValueAsString(msg));
     }
 
-    private String generateBody(String template, Content content) throws TemplateException, IOException {
-        return templateProcessor.processTemplate(content.getValue(), template);
+    private String generateBody(String template,
+                                Content content) throws TemplateException, IOException {
+        return templateProcessor.processTemplate(content.getValue(), template) ;
     }
+
 }

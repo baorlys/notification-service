@@ -1,12 +1,12 @@
 package com.example.notification.enums;
 
 public enum TargetOutput {
-    EMAIL("emailQueue"),
-    SMS("smsQueue"),
-    PUSH("pushQueue"),
-    VOICE("voiceQueue"),
-    MEDIA("mediaQueue"),
-    SOCIAL("socialQueue");
+    EMAIL("email-queue"),
+    SMS("sms-queue"),
+    PUSH("push-queue"),
+    VOICE("voice-queue"),
+    MEDIA("media-queue"),
+    SOCIAL("social-queue");
 
     private final String queueName;
 
