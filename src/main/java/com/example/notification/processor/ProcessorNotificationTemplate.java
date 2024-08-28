@@ -25,10 +25,10 @@ public abstract class ProcessorNotificationTemplate {
         String to = (String) messageMap.get(MessageConstants.TO);
         String subject = (String) messageMap.get(MessageConstants.SUBJECT);
         String body = (String) messageMap.get(MessageConstants.BODY);
-        processStrategy(from,to,subject,body);
+        sendMessage(from,to,subject,body);
     }
 
-    abstract void processStrategy(SenderInfo from, String to, String subject, String body) throws IOException;
+    abstract void sendMessage(SenderInfo from, String to, String subject, String body) throws IOException;
 
     private Map<String,Object> convertMessageToMap() throws JsonProcessingException {
         return objectMapper.readValue(message, new TypeReference<>() {});

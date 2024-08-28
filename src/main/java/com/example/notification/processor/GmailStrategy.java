@@ -1,19 +1,16 @@
 package com.example.notification.processor;
 
+import com.example.notification.config.EnvironmentConfig;
 import com.example.notification.input.SenderInfo;
 import org.simplejavamail.api.email.Email;
 import org.simplejavamail.api.mailer.Mailer;
 import org.simplejavamail.email.EmailBuilder;
 import org.simplejavamail.mailer.MailerBuilder;
 
-public class SendMailStrategy extends ProcessorNotificationTemplate {
-
-    public SendMailStrategy(String message) {
-        super(message);
-    }
-
+public class GmailStrategy implements MailStrategy {
+    EnvironmentConfig environmentConfig = new EnvironmentConfig();
     @Override
-    void processStrategy(SenderInfo from, String to, String subject, String body) {
+    public void sendEmail(SenderInfo from, String to, String subject, String body) {
         Email email = EmailBuilder.startingBlank()
                 .from(from.getName(), from.getContact())
                 .to(to)
@@ -21,20 +18,14 @@ public class SendMailStrategy extends ProcessorNotificationTemplate {
                 .withHTMLText(body)
                 .withPlainText(body)
                 .buildEmail();
-        sendWithConfig(email);
-    }
 
+        String username = environmentConfig.get("GMAIL_USERNAME");
+        String password = environmentConfig.get("GMAIL_PASSWORD");
 
-    private void sendWithConfig(Email email) {
-        var username = environmentConfig.get("GMAIL_USERNAME");
-        var password = environmentConfig.get("GMAIL_PASSWORD");
         Mailer mailer = MailerBuilder
-                .withSMTPServer("smtp.gmail.com", 25, username, password)
+                .withSMTPServer("smtp.gmail.com", 587, username, password)
                 .buildMailer();
 
         mailer.sendMail(email);
     }
-
-
-
 }
