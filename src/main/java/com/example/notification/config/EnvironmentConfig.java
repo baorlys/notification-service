@@ -20,4 +20,5 @@ public class EnvironmentConfig {
     public String get(String key) {
         return this.dotenv.get(key);
     }
+
 }

@@ -1,6 +1,7 @@
 package com.example.notification.processor;
 
 import com.example.notification.config.StringeeAPIConfig;
+import com.example.notification.global.service.PhoneService;
 import com.example.notification.input.SenderInfo;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import okhttp3.MediaType;
@@ -29,7 +30,6 @@ public class VoiceCallProcessor extends ProcessorNotificationTemplate {
         String data = buildJsonData(to, body);
         // Create request body
         RequestBody requestBody = RequestBody.create(data, MediaType.get("application/json; charset=utf-8"));
-
         // Build request
         Request request = new Request.Builder()
                 .url(apiConfig.getApiUrl())
@@ -41,6 +41,7 @@ public class VoiceCallProcessor extends ProcessorNotificationTemplate {
 
 
     private String buildJsonData(String toPhone, String message) throws JsonProcessingException {
+        toPhone = PhoneService.prependCountryCode(toPhone);
         Map<String, Object> data = new HashMap<>();
 
         Map<String, Object> from = new HashMap<>();
@@ -64,6 +65,7 @@ public class VoiceCallProcessor extends ProcessorNotificationTemplate {
 
         return objectMapper.writeValueAsString(data);
     }
+
 
 
 }
