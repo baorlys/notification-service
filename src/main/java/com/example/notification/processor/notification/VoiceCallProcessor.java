@@ -24,7 +24,7 @@ public class VoiceCallProcessor extends ProcessorNotificationTemplate {
     }
 
     @Override
-    void sendMessage(SenderInfo from, String to, String subject, String body) throws IOException {
+    protected void sendMessage(SenderInfo from, String to, String subject, String body) throws IOException {
         OkHttpClient client = new OkHttpClient();
 
         String data = buildJsonData(to, body);

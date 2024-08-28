@@ -11,7 +11,7 @@ public class SmsProcessor extends ProcessorNotificationTemplate {
     }
 
     @Override
-    void sendMessage(SenderInfo from, String to, String subject, String body) {
+    protected void sendMessage(SenderInfo from, String to, String subject, String body) {
         var accountSid = environmentConfig.get("TWILIO_ACCOUNT_SID");
         var authToken = environmentConfig.get("TWILIO_AUTH_TOKEN");
 

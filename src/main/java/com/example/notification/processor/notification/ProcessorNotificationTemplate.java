@@ -28,7 +28,7 @@ public abstract class ProcessorNotificationTemplate {
         sendMessage(from,to,subject,body);
     }
 
-    abstract void sendMessage(SenderInfo from, String to, String subject, String body) throws IOException;
+    protected abstract void sendMessage(SenderInfo from, String to, String subject, String body) throws IOException;
 
     private Map<String,Object> convertMessageToMap() throws JsonProcessingException {
         return objectMapper.readValue(message, new TypeReference<>() {});
