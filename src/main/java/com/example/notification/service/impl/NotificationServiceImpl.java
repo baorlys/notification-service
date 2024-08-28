@@ -1,5 +1,6 @@
 package com.example.notification.service.impl;
 
+import com.example.notification.config.MessageConstants;
 import com.example.notification.enums.TargetOutput;
 import com.example.notification.input.Content;
 import com.example.notification.input.SendMessage;
@@ -147,10 +148,10 @@ public class NotificationServiceImpl implements NotificationService {
                                                     String to,
                                                     String body) {
         Map<String, Object> notify = new HashMap<>();
-        notify.put("from", msg.getFrom());
-        notify.put("to", to);
-        notify.put("subject", msg.getSubject());
-        notify.put("body", body);
+        notify.put(MessageConstants.FROM, msg.getFrom());
+        notify.put(MessageConstants.TO, to);
+        notify.put(MessageConstants.SUBJECT, msg.getSubject());
+        notify.put(MessageConstants.BODY, body);
         return notify;
     }
 
