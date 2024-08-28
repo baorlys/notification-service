@@ -4,14 +4,14 @@ import com.example.notification.input.SenderInfo;
 import com.twilio.Twilio;
 import com.twilio.rest.api.v2010.account.Message;
 
-public class SendSmsStrategy extends ProcessorNotificationTemplate {
+public class SmsProcessor extends ProcessorNotificationTemplate {
 
-    public SendSmsStrategy(String message) {
+    public SmsProcessor(String message) {
         super(message);
     }
 
     @Override
-    void processStrategy(SenderInfo from, String to, String subject, String body) {
+    void sendMessage(SenderInfo from, String to, String subject, String body) {
         var accountSid = environmentConfig.get("TWILIO_ACCOUNT_SID");
         var authToken = environmentConfig.get("TWILIO_AUTH_TOKEN");
 

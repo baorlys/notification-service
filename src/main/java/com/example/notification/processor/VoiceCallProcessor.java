@@ -14,16 +14,16 @@ import java.util.List;
 import java.util.Map;
 
 
-public class VoiceCallStrategy extends ProcessorNotificationTemplate {
+public class VoiceCallProcessor extends ProcessorNotificationTemplate {
     StringeeAPIConfig apiConfig;
 
-    public VoiceCallStrategy(String message, StringeeAPIConfig apiConfig) {
+    public VoiceCallProcessor(String message, StringeeAPIConfig apiConfig) {
         super(message);
         this.apiConfig = apiConfig;
     }
 
     @Override
-    void processStrategy(SenderInfo from, String to, String subject, String body) throws IOException {
+    void sendMessage(SenderInfo from, String to, String subject, String body) throws IOException {
         OkHttpClient client = new OkHttpClient();
 
         String data = buildJsonData(to, body);
