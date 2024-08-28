@@ -1,4 +1,4 @@
-package com.example.notification.processor;
+package com.example.notification.processor.notification;
 
 import com.example.notification.input.SenderInfo;
 import com.twilio.Twilio;

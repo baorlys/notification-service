@@ -49,8 +49,8 @@ public class NotificationServiceImpl implements NotificationService {
     }
 
 
-    private User fetchUser(String email) {
-        return Optional.ofNullable(userRepository.findByEmail(email))
+    private User fetchUser(String contact) {
+        return Optional.ofNullable(userRepository.findByEmailOrPhone(contact))
                 .orElseThrow(() -> new IllegalArgumentException("User not found"));
     }
 
