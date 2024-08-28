@@ -1,4 +1,4 @@
-package com.example.notification.processor;
+package com.example.notification.processor.notification.mail;
 
 import com.example.notification.config.EnvironmentConfig;
 import com.example.notification.input.SenderInfo;
