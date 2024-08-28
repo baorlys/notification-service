@@ -1,18 +1,18 @@
 package com.example.notification.service.impl.queue;
 
+import com.example.notification.config.DynamicConfig;
 import com.example.notification.config.QueueConstants;
 import com.example.notification.config.StringeeAPIConfig;
-import com.example.notification.processor.notification.MailProcessor;
 import com.example.notification.processor.notification.ProcessorNotificationTemplate;
 import com.example.notification.processor.notification.SmsProcessor;
 import com.example.notification.processor.notification.VoiceCallProcessor;
 import com.example.notification.processor.notification.mail.MailFactory;
+import com.example.notification.processor.notification.mail.MailProcessor;
 import com.example.notification.processor.notification.mail.MailStrategy;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
@@ -21,10 +21,9 @@ import java.io.IOException;
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class NotificationConsumer {
-    @Value("${notification.strategy.mail}")
-    String mailStrategy;
-    StringeeAPIConfig stringeeAPIConfig;
 
+    StringeeAPIConfig stringeeAPIConfig;
+    DynamicConfig dynamicConfig;
 
 
     @RabbitListener(queues = QueueConstants.SMS_QUEUE)
@@ -35,7 +34,7 @@ public class NotificationConsumer {
 
     @RabbitListener(queues = QueueConstants.EMAIL_QUEUE)
     public void receiveEmailNotification(String message) throws IOException {
-        MailStrategy strategy = MailFactory.getMailStrategy(mailStrategy);
+        MailStrategy strategy = MailFactory.getMailStrategy(dynamicConfig.getStrategyMail());
         ProcessorNotificationTemplate processor = new MailProcessor(message, strategy);
         processor.process();
     }

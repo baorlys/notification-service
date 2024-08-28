@@ -1,7 +1,7 @@
-package com.example.notification.processor.notification;
+package com.example.notification.processor.notification.mail;
 
 import com.example.notification.input.SenderInfo;
-import com.example.notification.processor.notification.mail.MailStrategy;
+import com.example.notification.processor.notification.ProcessorNotificationTemplate;
 
 import java.io.IOException;
 
@@ -14,7 +14,7 @@ public class MailProcessor extends ProcessorNotificationTemplate {
     }
 
     @Override
-    void sendMessage(SenderInfo from, String to, String subject, String body) throws IOException {
+    protected void sendMessage(SenderInfo from, String to, String subject, String body) throws IOException {
         mailStrategy.sendEmail(from, to, subject, body);
     }
 
