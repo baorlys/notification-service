@@ -32,8 +32,7 @@ public class Credential {
     String secretKey;
 
     @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
-    CredentialStatus status;
+    CredentialStatus status = CredentialStatus.ACTIVE;
 
     @Column(updatable = false, insertable = false)
     LocalDateTime createdAt = LocalDateTime.now();
