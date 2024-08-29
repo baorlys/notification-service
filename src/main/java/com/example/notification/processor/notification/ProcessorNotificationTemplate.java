@@ -19,18 +19,20 @@ public abstract class ProcessorNotificationTemplate {
     protected ProcessorNotificationTemplate(String message) {
         this.message = message;
     }
+
     public void process() throws IOException {
         Map<String, Object> messageMap = convertMessageToMap();
         SenderInfo from = objectMapper.convertValue(messageMap.get(MessageConstants.FROM), SenderInfo.class);
         String to = (String) messageMap.get(MessageConstants.TO);
         String subject = (String) messageMap.get(MessageConstants.SUBJECT);
         String body = (String) messageMap.get(MessageConstants.BODY);
-        sendMessage(from,to,subject,body);
+        sendMessage(from, to, subject, body);
     }
 
     protected abstract void sendMessage(SenderInfo from, String to, String subject, String body) throws IOException;
 
-    private Map<String,Object> convertMessageToMap() throws JsonProcessingException {
-        return objectMapper.readValue(message, new TypeReference<>() {});
+    private Map<String, Object> convertMessageToMap() throws JsonProcessingException {
+        return objectMapper.readValue(message, new TypeReference<>() {
+        });
     }
 }

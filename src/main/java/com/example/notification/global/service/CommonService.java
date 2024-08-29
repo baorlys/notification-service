@@ -4,7 +4,7 @@ import javax.security.auth.login.CredentialException;
 
 public class CommonService {
     private CommonService() {
-        // Empty constructor
+        // Static class
     }
 
     public static void throwIsNull(Object obj, String msg) throws NullPointerException {
@@ -19,7 +19,11 @@ public class CommonService {
         }
     }
 
-
+    public static void throwIsNotValid(boolean isNotValid, String msg) throws CredentialException {
+        if (isNotValid) {
+            throw new CredentialException(msg);
+        }
+    }
 
 
 }

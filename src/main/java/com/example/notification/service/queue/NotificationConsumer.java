@@ -1,4 +1,4 @@
-package com.example.notification.service.impl.queue;
+package com.example.notification.service.queue;
 
 import com.example.notification.config.DynamicConfig;
 import com.example.notification.config.QueueConstants;
@@ -21,10 +21,8 @@ import java.io.IOException;
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class NotificationConsumer {
-
     StringeeAPIConfig stringeeAPIConfig;
     DynamicConfig dynamicConfig;
-
 
     @RabbitListener(queues = QueueConstants.SMS_QUEUE)
     public void receiveSmsNotification(String message) throws IOException {
