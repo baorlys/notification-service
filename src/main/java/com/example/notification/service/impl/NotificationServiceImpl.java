@@ -3,7 +3,7 @@ package com.example.notification.service.impl;
 import com.example.notification.config.MessageConstants;
 import com.example.notification.enums.TargetOutput;
 import com.example.notification.input.Content;
-import com.example.notification.input.SendMessage;
+import com.example.notification.input.Message;
 import com.example.notification.model.Notification;
 import com.example.notification.model.Recipient;
 import com.example.notification.model.Template;
@@ -41,7 +41,7 @@ public class NotificationServiceImpl implements NotificationService {
     ObjectMapper objectMapper;
 
     @Override
-    public void processNotification(SendMessage msg) throws IOException, TemplateException {
+    public void processNotification(Message msg) throws IOException, TemplateException {
         User user = fetchUser(msg.getFrom().getContact());
         Notification notification = createNotification(msg, user);
         saveRecipients(notification, msg.getTos(), msg.getContents());
@@ -54,7 +54,7 @@ public class NotificationServiceImpl implements NotificationService {
                 .orElseThrow(() -> new IllegalArgumentException("User not found"));
     }
 
-    private Notification createNotification(SendMessage msg,
+    private Notification createNotification(Message msg,
                                             User user) {
         Template template = fetchTemplate(msg.getTemplateId());
         Notification notify = new Notification();
@@ -105,7 +105,7 @@ public class NotificationServiceImpl implements NotificationService {
     }
 
     private void sendNotifications(Notification notification,
-                                   SendMessage msg) throws IOException, TemplateException {
+                                   Message msg) throws IOException, TemplateException {
         List<Map.Entry<String, String>> notifications = prepareNotifications(notification, msg.getTos(), msg.getContents());
         for (Map.Entry<String, String> entry : notifications) {
             sendNotification(msg, entry.getKey(), entry.getValue());
@@ -137,14 +137,14 @@ public class NotificationServiceImpl implements NotificationService {
         return generateBody(template.getBody(), content);
     }
 
-    private void sendNotification(SendMessage msg,
+    private void sendNotification(Message msg,
                                   String to,
                                   String body) throws JsonProcessingException {
         Map<String, Object> notify = createPublicMessage(msg, to, body);
         publishNotification(msg.getTargetOutput(), notify);
     }
 
-    private Map<String, Object> createPublicMessage(SendMessage msg,
+    private Map<String, Object> createPublicMessage(Message msg,
                                                     String to,
                                                     String body) {
         Map<String, Object> notify = new HashMap<>();

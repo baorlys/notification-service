@@ -1,6 +1,6 @@
 package com.example.notification.controller;
 
-import com.example.notification.input.SendMessage;
+import com.example.notification.input.Message;
 import com.example.notification.service.NotificationService;
 import freemarker.template.TemplateException;
 import jakarta.validation.Valid;
@@ -25,7 +25,7 @@ public class NotificationController {
     NotificationService notificationService;
 
     @PostMapping("/send")
-    public ResponseEntity<Void> sendNotification(@Valid @RequestBody SendMessage request) throws IOException, TemplateException {
+    public ResponseEntity<Void> sendNotification(@Valid @RequestBody Message request) throws IOException, TemplateException {
         notificationService.processNotification(request);
         return ResponseEntity.ok().build();
     }

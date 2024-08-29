@@ -8,7 +8,7 @@ import lombok.Data;
 import java.util.List;
 
 @Data
-public class SendMessage {
+public class Message {
 
     @NotNull(message = "Target output is required")
     @Valid
