@@ -26,6 +26,7 @@ public class UserServiceImpl implements UserService {
         userRepository.save(user);
     }
 
+
     @Override
     public UserDTO getUserDTO(String contact) {
         UserDTO user = userRepository.findByEmailOrPhone(contact);

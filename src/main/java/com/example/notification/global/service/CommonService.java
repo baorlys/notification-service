@@ -26,4 +26,15 @@ public class CommonService {
     }
 
 
+    public static void throwIsOverSizeMessage(int length, int maxMessageSize, String msg) {
+        if (length > maxMessageSize) {
+            throw new IllegalArgumentException(msg);
+        }
+    }
+
+    public static void throwArgumentException(boolean isNotValid, String msg) {
+        if (isNotValid) {
+            throw new IllegalArgumentException(msg);
+        }
+    }
 }

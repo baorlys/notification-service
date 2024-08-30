@@ -31,6 +31,8 @@ public class User {
     @Column(unique = true, nullable = false)
     String email;
 
+    String password;
+
     @Column(unique = true)
     String phone;
 
@@ -39,4 +41,7 @@ public class User {
 
     LocalDateTime updatedAt = LocalDateTime.now();
 
+    public User(UUID id) {
+        this.id = id;
+    }
 }

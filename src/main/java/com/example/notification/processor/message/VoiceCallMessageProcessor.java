@@ -1,4 +1,4 @@
-package com.example.notification.processor.notification;
+package com.example.notification.processor.message;
 
 import com.example.notification.config.StringeeAPIConfig;
 import com.example.notification.global.service.PhoneService;
@@ -15,10 +15,10 @@ import java.util.List;
 import java.util.Map;
 
 
-public class VoiceCallProcessor extends ProcessorNotificationTemplate {
+public class VoiceCallMessageProcessor extends MessageProcessorTemplate {
     StringeeAPIConfig apiConfig;
 
-    public VoiceCallProcessor(String message, StringeeAPIConfig apiConfig) {
+    public VoiceCallMessageProcessor(String message, StringeeAPIConfig apiConfig) {
         super(message);
         this.apiConfig = apiConfig;
     }
@@ -65,7 +65,6 @@ public class VoiceCallProcessor extends ProcessorNotificationTemplate {
 
         return objectMapper.writeValueAsString(data);
     }
-
 
 
 }

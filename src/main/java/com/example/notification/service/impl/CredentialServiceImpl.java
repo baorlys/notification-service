@@ -26,6 +26,7 @@ public class CredentialServiceImpl implements CredentialService {
     CredentialRepository credentialRepository;
     Mapper mapper;
 
+
     @Override
     public List<CredentialDTO> getCredentials(UUID userId) {
         return credentialRepository.findAllByUserId(userId).stream()
@@ -46,6 +47,12 @@ public class CredentialServiceImpl implements CredentialService {
     }
 
     @Override
+    public UUID getUserIdByCredential(CredentialDTO credentialDTO) {
+        CredentialDTO encryptCre = encryptCredential(credentialDTO);
+        return credentialRepository.getUserWithCredential(encryptCre.getApiKey(), encryptCre.getSecretKey());
+    }
+
+    @Override
     public CredentialDTO generateCredential() {
         String apiKey = KeyGeneratorFactory.getKeyGenerator(KeyType.API_KEY).generate();
         String secretKey = KeyGeneratorFactory.getKeyGenerator(KeyType.SECRET_KEY).generate();
@@ -55,8 +62,7 @@ public class CredentialServiceImpl implements CredentialService {
 
     @Override
     public boolean isValidCredential(CredentialDTO credentialDTO) {
-        CredentialDTO encryptCre = encryptCredential(credentialDTO);
-        return credentialRepository.existsByApiKeyAndSecretKey(encryptCre.getApiKey(), encryptCre.getSecretKey());
+        return getUserIdByCredential(credentialDTO) != null;
     }
 
     private CredentialDTO encryptCredential(CredentialDTO credential) {

@@ -9,9 +9,10 @@ import jakarta.validation.constraints.Size;
 import lombok.Data;
 
 import java.util.List;
+import java.util.UUID;
 
 @Data
-public class MessageRequest {
+public class NotificationRequest {
 
     @NotNull(message = "Target output is required")
     @Valid
@@ -31,7 +32,7 @@ public class MessageRequest {
 
     String subject;
 
-    String templateId;
+    UUID templateId;
 
     @NotEmpty(message = "Contents cannot be empty")
     @Valid

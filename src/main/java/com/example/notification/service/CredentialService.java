@@ -12,6 +12,8 @@ public interface CredentialService {
 
     UUID createCredential(UserDTO userDTO);
 
+    UUID getUserIdByCredential(CredentialDTO credentialDTO);
+
     CredentialDTO generateCredential();
 
     boolean isValidCredential(CredentialDTO credentialDTO);
