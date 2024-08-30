@@ -1,17 +1,18 @@
 package com.example.notification.config.context;
 
 import com.example.notification.enums.TargetOutput;
+import com.example.notification.input.NotificationRequest;
 import com.example.notification.input.SenderInfo;
 import com.example.notification.model.TemplateMessage;
 
-public class NotificationRouterContext {
+public class MessageTransferContext {
     private static final ThreadLocal<TemplateMessage> templateHolder = new ThreadLocal<>();
     private static final ThreadLocal<SenderInfo> fromHolder = new ThreadLocal<>();
     private static final ThreadLocal<String> subjectHolder = new ThreadLocal<>();
 
     private static final ThreadLocal<TargetOutput> targetHolder = new ThreadLocal<>();
 
-    private NotificationRouterContext() {
+    private MessageTransferContext() {
         // static class
     }
 
@@ -47,11 +48,10 @@ public class NotificationRouterContext {
         targetHolder.set(targetOutput);
     }
 
-    public static void set(TargetOutput target, SenderInfo from, String subject, TemplateMessage templateMessage) {
-        setTargetOutput(target);
-        setFrom(from);
-        setSubject(subject);
-        setTemplate(templateMessage);
+    public static void set(NotificationRequest req) {
+        setTargetOutput(req.getTargetOutput());
+        setFrom(req.getFrom());
+        setSubject(req.getSubject());
     }
 
     public static void clear() {
