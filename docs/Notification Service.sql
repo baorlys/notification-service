@@ -14,7 +14,7 @@ CREATE TABLE [credential] (
 )
 GO
 
-CREATE TABLE [template] (
+CREATE TABLE [templateMessage] (
   [id] UUID PRIMARY KEY,
   [owner] UUID,
   [name] VARCHAR,
@@ -70,13 +70,13 @@ GO
 ALTER TABLE [credential] ADD FOREIGN KEY ([user_id]) REFERENCES [user_info] ([id])
 GO
 
-ALTER TABLE [template] ADD FOREIGN KEY ([owner]) REFERENCES [user_info] ([id])
+ALTER TABLE [templateMessage] ADD FOREIGN KEY ([owner]) REFERENCES [user_info] ([id])
 GO
 
 ALTER TABLE [notification] ADD FOREIGN KEY ([user_id]) REFERENCES [user_info] ([id])
 GO
 
-ALTER TABLE [notification] ADD FOREIGN KEY ([template_id]) REFERENCES [template] ([id])
+ALTER TABLE [notification] ADD FOREIGN KEY ([template_id]) REFERENCES [templateMessage] ([id])
 GO
 
 ALTER TABLE [receiver] ADD FOREIGN KEY ([notification_id]) REFERENCES [notification] ([id])

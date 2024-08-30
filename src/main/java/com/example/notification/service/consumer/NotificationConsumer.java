@@ -1,8 +1,9 @@
-package com.example.notification.service.queue;
+package com.example.notification.service.consumer;
 
 import com.example.notification.config.QueueConstants;
 import com.example.notification.input.NotificationRequest;
-import com.example.notification.service.NotificationRouterService;
+import com.example.notification.service.NotificationService;
+import com.example.notification.service.producer.MessageProducerService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import freemarker.template.TemplateException;
 import lombok.AccessLevel;
@@ -17,12 +18,16 @@ import java.io.IOException;
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class NotificationConsumer {
-    NotificationRouterService notificationRouterService;
+    MessageProducerService messageProducerService;
+    NotificationService notificationService;
     ObjectMapper objectMapper;
 
     @RabbitListener(queues = QueueConstants.NOTIFICATION_QUEUE)
-    public void transferMessageToQueue(String message) throws IOException, TemplateException {
-        NotificationRequest notificationRequest = objectMapper.readValue(message, NotificationRequest.class);
-        notificationRouterService.sendMessageToQueue(notificationRequest);
+    public void transferMessage(String message) throws IOException, TemplateException {
+        NotificationRequest req = objectMapper.readValue(message, NotificationRequest.class);
+
+        messageProducerService.publishMessage(req);
+
+        notificationService.saveNotification(req);
     }
 }

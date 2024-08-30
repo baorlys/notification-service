@@ -2,28 +2,25 @@ package com.example.notification;
 
 import com.example.notification.enums.TemplateType;
 import com.example.notification.input.TemplateInput;
-import com.example.notification.model.Template;
+import com.example.notification.model.TemplateMessage;
 import com.example.notification.service.TemplateService;
 import org.junit.jupiter.api.Test;
-
-import static org.junit.jupiter.api.Assertions.*;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.mock.web.MockMultipartFile;
 
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
-import java.nio.file.Files;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
+import static org.junit.jupiter.api.Assertions.*;
+
 @SpringBootTest
-class TemplateServiceTest {
+class TemplateMessageServiceTest {
     @Autowired
     private TemplateService templateService;
 
@@ -43,9 +40,9 @@ class TemplateServiceTest {
         input.setName(tempName);
         input.setType(TemplateType.HTML);
         input.setFile(mockFile);
-        Template template = templateService.createTemplate(userId, input);
-        assertNotNull(template);
-        assertEquals(TemplateType.HTML, template.getTemplateType());
+        TemplateMessage templateMessage = templateService.createTemplate(userId, input);
+        assertNotNull(templateMessage);
+        assertEquals(TemplateType.HTML, templateMessage.getTemplateType());
     }
 
     @Test
@@ -53,19 +50,19 @@ class TemplateServiceTest {
         String name = "Khoa";
         int age = 21;
         String job = "Software Engineering";
-        Template temp = templateService.getTemplateById(UUID.fromString("34636DDF-B384-4BA3-8546-E49903202D00"));
+        TemplateMessage temp = templateService.getTemplateById(UUID.fromString("34636DDF-B384-4BA3-8546-E49903202D00"));
         Map<String, Object> model = new HashMap<>();
         model.put("name", name);
         model.put("age", age);
         model.put("job", job);
-        String result = templateService.processTemplate(model, temp.getBody());
+        String result = templateService.processTemplate(model, temp);
         assertNotEquals("", result);
     }
 
     @Test
     void testGetTemplateById() {
         UUID id = UUID.fromString("692ADD3A-1CCC-496C-B4A3-2A95FCDFE57C");
-        Template t = templateService.getTemplateById(id);
+        TemplateMessage t = templateService.getTemplateById(id);
         assertNotNull(t);
     }
 
@@ -75,8 +72,8 @@ class TemplateServiceTest {
         int pageSize = 10;
         int pageNum = 0;
         String sortBy = "name";
-        List<Template> templates = templateService.getUserTemplates(userId, pageNum, pageSize, sortBy);
-        assertTrue(templates.size() > 0);
+        List<TemplateMessage> templateMessages = templateService.getUserTemplates(userId, pageNum, pageSize, sortBy);
+        assertTrue(templateMessages.size() > 0);
     }
 
     @Test
@@ -85,7 +82,7 @@ class TemplateServiceTest {
         TemplateInput input = new TemplateInput();
         input.setName("new name");
         input.setContent("new string ${age}");
-        Template t = templateService.updateTemplate(id, input);
+        TemplateMessage t = templateService.updateTemplate(id, input);
         assertNotNull(t);
     }
 }

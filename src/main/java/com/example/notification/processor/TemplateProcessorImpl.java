@@ -1,5 +1,6 @@
 package com.example.notification.processor;
 
+import com.example.notification.model.TemplateMessage;
 import freemarker.template.Configuration;
 import freemarker.template.Template;
 import freemarker.template.TemplateException;
@@ -17,8 +18,12 @@ public class TemplateProcessorImpl implements TemplateProcessor {
         configuration.setDefaultEncoding("UTF-8");
     }
 
-    public String processTemplate(Object data, String template) throws TemplateException, IOException {
-        Template temp = new Template("", template, configuration);
+    public String processTemplate(Object data, TemplateMessage template) throws TemplateException, IOException {
+        if (template == null) {
+            return data.toString();
+        }
+
+        Template temp = new Template("", template.getBody(), configuration);
         StringWriter writer = new StringWriter();
         temp.process(data, writer);
         return writer.toString();

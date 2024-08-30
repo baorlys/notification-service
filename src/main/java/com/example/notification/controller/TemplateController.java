@@ -3,7 +3,7 @@ package com.example.notification.controller;
 import com.example.notification.dto.TemplateDTO;
 import com.example.notification.global.mapper.Mapper;
 import com.example.notification.input.TemplateInput;
-import com.example.notification.model.Template;
+import com.example.notification.model.TemplateMessage;
 import com.example.notification.service.TemplateService;
 import lombok.AllArgsConstructor;
 import lombok.NonNull;
@@ -25,7 +25,7 @@ public class TemplateController {
 
     @GetMapping("templates/{id}")
     public ResponseEntity<TemplateDTO> getTemplateById(@PathVariable UUID id) {
-        Template t = templateService.getTemplateById(id);
+        TemplateMessage t = templateService.getTemplateById(id);
         return new ResponseEntity<>(mapper.map(t, TemplateDTO.class), HttpStatus.OK);
     }
 
@@ -33,7 +33,7 @@ public class TemplateController {
     public ResponseEntity<TemplateDTO> getTemplateById(
             @RequestParam UUID userId,
             @RequestBody TemplateInput input) {
-        Template t = templateService.createTemplate(userId, input);
+        TemplateMessage t = templateService.createTemplate(userId, input);
         return new ResponseEntity<>(mapper.map(t, TemplateDTO.class), HttpStatus.OK);
     }
 
@@ -44,8 +44,8 @@ public class TemplateController {
             @RequestParam(required = false, defaultValue = "10") int pageSize,
             @RequestParam(required = false) String sortBy
     ) {
-        List<Template> templates = templateService.getUserTemplates(userId, pageNum, pageSize, sortBy);
-        List<TemplateDTO> dto = templates.stream().map(t -> mapper.map(t, TemplateDTO.class))
+        List<TemplateMessage> templateMessages = templateService.getUserTemplates(userId, pageNum, pageSize, sortBy);
+        List<TemplateDTO> dto = templateMessages.stream().map(t -> mapper.map(t, TemplateDTO.class))
                 .collect(Collectors.toList());
         return new ResponseEntity<>(dto, HttpStatus.OK);
     }

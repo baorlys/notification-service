@@ -1,6 +1,6 @@
 package com.example.notification.interceptor;
 
-import com.example.notification.config.RequestContext;
+import com.example.notification.config.context.RequestContext;
 import com.example.notification.dto.CredentialDTO;
 import com.example.notification.global.service.CommonService;
 import com.example.notification.service.CredentialService;
@@ -19,6 +19,8 @@ import org.springframework.web.servlet.HandlerInterceptor;
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 @Slf4j
 public class CredentialInterceptor implements HandlerInterceptor {
+    static final String HEADER_API_KEY = "x-api-key";
+    static final String HEADER_SECRET_KEY = "x-secret-key";
     CredentialService credentialService;
 
     @Override
@@ -26,8 +28,8 @@ public class CredentialInterceptor implements HandlerInterceptor {
                              @NotNull HttpServletResponse response,
                              @NotNull Object handler)
             throws Exception {
-        String apiKey = request.getHeader("x-api-key");
-        String secretKey = request.getHeader("x-secret-key");
+        String apiKey = request.getHeader(HEADER_API_KEY);
+        String secretKey = request.getHeader(HEADER_SECRET_KEY);
         CommonService.throwIsNotValid(!isValidCredential(apiKey, secretKey), "Invalid API Key or Secret Key");
         RequestContext.setApiKey(apiKey);
         RequestContext.setSecretKey(secretKey);
@@ -35,7 +37,9 @@ public class CredentialInterceptor implements HandlerInterceptor {
     }
 
     @Override
-    public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) throws Exception {
+    public void afterCompletion(@NotNull HttpServletRequest request,
+                                @NotNull HttpServletResponse response,
+                                @NotNull Object handler, Exception ex) {
         RequestContext.clear();
     }
 

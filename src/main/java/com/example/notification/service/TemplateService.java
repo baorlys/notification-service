@@ -1,7 +1,7 @@
 package com.example.notification.service;
 
 import com.example.notification.input.TemplateInput;
-import com.example.notification.model.Template;
+import com.example.notification.model.TemplateMessage;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -10,13 +10,13 @@ import java.util.UUID;
 
 @Service
 public interface TemplateService {
-    Template createTemplate(UUID userId, TemplateInput input);
+    TemplateMessage createTemplate(UUID userId, TemplateInput input);
 
-    String processTemplate(Map<String, Object> data, String template);
+    String processTemplate(Map<String, Object> data, TemplateMessage templateMsg);
 
-    Template getTemplateById(UUID id);
+    TemplateMessage getTemplateById(UUID id);
 
-    List<Template> getUserTemplates(UUID userId, int pageNum, int pageSize, String sortBy);
+    List<TemplateMessage> getUserTemplates(UUID userId, int pageNum, int pageSize, String sortBy);
 
-    Template updateTemplate(UUID id, TemplateInput input);
+    TemplateMessage updateTemplate(UUID id, TemplateInput input);
 }
