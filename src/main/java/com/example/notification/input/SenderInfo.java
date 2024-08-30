@@ -1,9 +1,12 @@
 package com.example.notification.input;
 
+import jakarta.annotation.Nullable;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
+
+import java.util.UUID;
 
 @Data
 public class SenderInfo {
@@ -16,4 +19,6 @@ public class SenderInfo {
     )
     String contact; // Maybe Email or PhoneNumber
     String name;
+    @Nullable
+    UUID userId;
 }

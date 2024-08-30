@@ -1,5 +1,6 @@
 package com.example.notification.model;
 
+import com.example.notification.enums.CredentialStatus;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -30,6 +31,11 @@ public class Credential {
     @Column(nullable = false)
     String secretKey;
 
+    @Enumerated(EnumType.STRING)
+    CredentialStatus status = CredentialStatus.ACTIVE;
+
     @Column(updatable = false, insertable = false)
     LocalDateTime createdAt = LocalDateTime.now();
+
+
 }

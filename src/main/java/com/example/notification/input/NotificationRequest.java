@@ -2,13 +2,17 @@ package com.example.notification.input;
 
 import com.example.notification.enums.TargetOutput;
 import jakarta.validation.Valid;
-import jakarta.validation.constraints.*;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
 import lombok.Data;
 
 import java.util.List;
+import java.util.UUID;
 
 @Data
-public class SendMessage {
+public class NotificationRequest {
 
     @NotNull(message = "Target output is required")
     @Valid
@@ -28,7 +32,7 @@ public class SendMessage {
 
     String subject;
 
-    String templateId;
+    UUID templateId;
 
     @NotEmpty(message = "Contents cannot be empty")
     @Valid

@@ -1,4 +1,4 @@
-package com.example.notification.processor.notification.mail;
+package com.example.notification.processor.message.mail;
 
 import com.example.notification.config.EnvironmentConfig;
 import com.example.notification.input.SenderInfo;
@@ -13,6 +13,7 @@ import java.io.IOException;
 
 public class TwilioMailStrategy implements MailStrategy {
     EnvironmentConfig environmentConfig = new EnvironmentConfig();
+
     @Override
     public void sendEmail(SenderInfo from, String to, String subject, String body) throws IOException {
         Email fromEmail = new Email(environmentConfig.get("SENDGRID_EMAIL"));

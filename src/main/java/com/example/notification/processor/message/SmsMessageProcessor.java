@@ -1,12 +1,12 @@
-package com.example.notification.processor.notification;
+package com.example.notification.processor.message;
 
 import com.example.notification.input.SenderInfo;
 import com.twilio.Twilio;
 import com.twilio.rest.api.v2010.account.Message;
 
-public class SmsProcessor extends ProcessorNotificationTemplate {
+public class SmsMessageProcessor extends MessageProcessorTemplate {
 
-    public SmsProcessor(String message) {
+    public SmsMessageProcessor(String message) {
         super(message);
     }
 
