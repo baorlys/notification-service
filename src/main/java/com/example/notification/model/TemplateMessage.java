@@ -16,7 +16,7 @@ import java.util.UUID;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @NoArgsConstructor
 @AllArgsConstructor
-public class Template {
+public class TemplateMessage {
     @Id
     @GeneratedValue
     UUID id;

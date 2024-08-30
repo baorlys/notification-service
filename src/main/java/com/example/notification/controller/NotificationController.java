@@ -1,7 +1,7 @@
 package com.example.notification.controller;
 
 import com.example.notification.input.NotificationRequest;
-import com.example.notification.service.ReceiverNotificationService;
+import com.example.notification.service.producer.NotificationProducerService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import jakarta.validation.Valid;
 import lombok.AccessLevel;
@@ -20,12 +20,12 @@ import org.springframework.web.bind.annotation.RestController;
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 @Validated
 public class NotificationController {
-    ReceiverNotificationService receiverNotificationService;
+    NotificationProducerService notificationProducerService;
 
 
     @PostMapping("/send")
     public ResponseEntity<Void> sendNotification(@Valid @RequestBody NotificationRequest request) throws JsonProcessingException {
-        receiverNotificationService.receiveNotification(request);
+        notificationProducerService.publishNotification(request);
         return ResponseEntity.ok().build();
     }
 

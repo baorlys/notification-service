@@ -1,4 +1,4 @@
-package com.example.notification.service.queue;
+package com.example.notification.service.consumer;
 
 import com.example.notification.config.DynamicConfig;
 import com.example.notification.config.QueueConstants;
@@ -20,7 +20,7 @@ import java.io.IOException;
 @Component
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
-public class MessageQueueConsumer {
+public class MessageConsumer {
     StringeeAPIConfig stringeeAPIConfig;
     DynamicConfig dynamicConfig;
 

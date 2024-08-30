@@ -30,7 +30,7 @@ public class Notification {
     String sender;
 
     @ManyToOne
-    Template template;
+    TemplateMessage templateMessage;
 
     @Enumerated(EnumType.STRING)
     TargetOutput targetOutput;

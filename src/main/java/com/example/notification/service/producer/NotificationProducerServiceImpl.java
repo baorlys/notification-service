@@ -1,13 +1,12 @@
-package com.example.notification.service.impl;
+package com.example.notification.service.producer;
 
 import com.example.notification.config.QueueConstants;
-import com.example.notification.config.RequestContext;
+import com.example.notification.config.context.RequestContext;
 import com.example.notification.dto.CredentialDTO;
 import com.example.notification.global.service.CommonService;
 import com.example.notification.input.Content;
 import com.example.notification.input.NotificationRequest;
 import com.example.notification.service.CredentialService;
-import com.example.notification.service.ReceiverNotificationService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.AccessLevel;
@@ -22,14 +21,14 @@ import java.util.UUID;
 @Service
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
-public class ReceiverNotificationServiceImpl implements ReceiverNotificationService {
+public class NotificationProducerServiceImpl implements NotificationProducerService {
     static final int MAX_MESSAGE_SIZE = 134217728; // 128 MB
     AmqpTemplate amqpTemplate;
     CredentialService credentialService;
     ObjectMapper objectMapper;
 
     @Override
-    public void receiveNotification(NotificationRequest message) throws JsonProcessingException {
+    public void publishNotification(NotificationRequest message) throws JsonProcessingException {
         String jsonMessage = validateMessage(message);
         amqpTemplate.convertAndSend(QueueConstants.NOTIFICATION_QUEUE, jsonMessage);
     }

@@ -1,8 +1,5 @@
-package com.example.notification.config;
+package com.example.notification.config.context;
 
-import lombok.extern.slf4j.Slf4j;
-
-@Slf4j
 public class RequestContext {
     private static final ThreadLocal<String> apiKeyHolder = new ThreadLocal<>();
     private static final ThreadLocal<String> secretKeyHolder = new ThreadLocal<>();

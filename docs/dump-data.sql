@@ -10,15 +10,15 @@ VALUES
   (NEWID(), (SELECT [id] FROM [user_info] WHERE [email] = 'bob@example.com'), 'api_key_2', 'secret_key_2');
 
 
-INSERT INTO [template] ([id], [owner_id], [name], [template_type], [body])
+INSERT INTO [templateMessage] ([id], [owner_id], [name], [template_type], [body])
 VALUES
   (NEWID(), (SELECT [id] FROM [user_info] WHERE [email] = 'alice@example.com'), 'Welcome Email', 'plain_text', 'Welcome to our service!'),
   (NEWID(), (SELECT [id] FROM [user_info] WHERE [email] = 'bob@example.com'), 'Account Verification', 'html', '<html><body>Verify your account.</body></html>');
 
 INSERT INTO [notification] ([id], [user_id], [sender], [template_id], [status], [target_output])
 VALUES
-  (NEWID(), (SELECT [id] FROM [user_info] WHERE [email] = 'alice@example.com'), 'System', (SELECT [id] FROM [template] WHERE [name] = 'Welcome Email'), 'pending', 'email'),
-  (NEWID(), (SELECT [id] FROM [user_info] WHERE [email] = 'bob@example.com'), 'Admin', (SELECT [id] FROM [template] WHERE [name] = 'Account Verification'), 'sent', 'sms');
+  (NEWID(), (SELECT [id] FROM [user_info] WHERE [email] = 'alice@example.com'), 'System', (SELECT [id] FROM [templateMessage] WHERE [name] = 'Welcome Email'), 'pending', 'email'),
+  (NEWID(), (SELECT [id] FROM [user_info] WHERE [email] = 'bob@example.com'), 'Admin', (SELECT [id] FROM [templateMessage] WHERE [name] = 'Account Verification'), 'sent', 'sms');
 
 -- Insert sample data into receiver table
 INSERT INTO recipient ([id], [notification_id], [contact], [data], [is_read])
